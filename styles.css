@@ -82,3 +82,19 @@ body {
         padding: 1rem;
     }
 }
+
+#refresh-counter {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 0, 0, 0.25);
+    padding: 8px 14px;
+    border-radius: 8px;
+    backdrop-filter: blur(8px);
+    z-index: 10;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

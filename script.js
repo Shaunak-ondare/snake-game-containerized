@@ -103,3 +103,15 @@ particlesJS('particles-js', {
     },
     "retina_detect": true
   });
+
+// Refresh Count Logic
+document.addEventListener('DOMContentLoaded', () => {
+    let count = localStorage.getItem('pageRefreshCount');
+    count = count ? parseInt(count) + 1 : 1;
+    localStorage.setItem('pageRefreshCount', count);
+    
+    const countSpan = document.querySelector('#refresh-counter span');
+    if (countSpan) {
+        countSpan.textContent = count;
+    }
+});
