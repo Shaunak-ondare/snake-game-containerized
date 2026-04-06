@@ -102,10 +102,16 @@ function App() {
 
     const moveSnake = () => {
       setSnake((prev) => {
-         const head = { x: prev[0].x + directionRef.current.x, y: prev[0].y + directionRef.current.y };
+         let head = { x: prev[0].x + directionRef.current.x, y: prev[0].y + directionRef.current.y };
          
-         // Collisions Logic
-         if (head.x < 0 || head.x >= GRID_SIZE || head.y < 0 || head.y >= GRID_SIZE || prev.some(s => s.x === head.x && s.y === head.y)) {
+         // Border Wrap Logic
+         if (head.x < 0) head.x = GRID_SIZE - 1;
+         if (head.x >= GRID_SIZE) head.x = 0;
+         if (head.y < 0) head.y = GRID_SIZE - 1;
+         if (head.y >= GRID_SIZE) head.y = 0;
+         
+         // Self-Collision Logic
+         if (prev.some(s => s.x === head.x && s.y === head.y)) {
             setGameOver(true);
             submitScore(score);
             return prev;

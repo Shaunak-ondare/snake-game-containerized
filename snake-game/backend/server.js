@@ -25,8 +25,15 @@ app.get('/health', (req, res) => {
 app.get('/scores', (req, res) => {
     try {
         const scores = JSON.parse(fs.readFileSync(scoreFile, 'utf8'));
-        scores.sort((a, b) => b.score - a.score);
-        res.json(scores.slice(0, 10)); // Top 10
+        const bestMap = {};
+        for (const s of scores) {
+            if (!bestMap[s.name] || s.score > bestMap[s.name].score) {
+                bestMap[s.name] = s;
+            }
+        }
+        const deduped = Object.values(bestMap);
+        deduped.sort((a, b) => b.score - a.score);
+        res.json(deduped.slice(0, 10)); // Top 10
     } catch (e) {
         res.json([]);
     }
@@ -40,9 +47,18 @@ app.post('/score', (req, res) => {
     try {
         const scores = JSON.parse(fs.readFileSync(scoreFile, 'utf8'));
         scores.push({ name, score, date: new Date().toISOString() });
-        scores.sort((a, b) => b.score - a.score);
+        
+        const bestMap = {};
+        for (const s of scores) {
+            if (!bestMap[s.name] || s.score > bestMap[s.name].score) {
+                bestMap[s.name] = s;
+            }
+        }
+        const deduped = Object.values(bestMap);
+        deduped.sort((a, b) => b.score - a.score);
+        
         // Keep only top 100 on disk to save space
-        const topScores = scores.slice(0, 100);
+        const topScores = deduped.slice(0, 100);
         fs.writeFileSync(scoreFile, JSON.stringify(topScores));
         res.json({ success: true, topScores: topScores.slice(0,10) });
     } catch (e) {
