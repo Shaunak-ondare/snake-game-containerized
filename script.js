@@ -31,7 +31,7 @@ particlesJS('particles-js', {
         }
       },
       "size": {
-        "value": 3,
+        "value": 8,
         "random": true,
         "anim": {
           "enable": true,
@@ -49,8 +49,8 @@ particlesJS('particles-js', {
       },
       "move": {
         "enable": true,
-        "speed": 1,
-        "direction": "none",
+        "speed": 2,
+        "direction": "top",
         "random": true,
         "straight": false,
         "out_mode": "out",
@@ -67,7 +67,7 @@ particlesJS('particles-js', {
       "events": {
         "onhover": {
           "enable": true,
-          "mode": "grab"
+          "mode": "bubble"
         },
         "onclick": {
           "enable": true,
