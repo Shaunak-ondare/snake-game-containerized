@@ -104,14 +104,17 @@ particlesJS('particles-js', {
     "retina_detect": true
   });
 
-// Refresh Count Logic
-document.addEventListener('DOMContentLoaded', () => {
-    let count = localStorage.getItem('pageRefreshCount');
-    count = count ? parseInt(count) + 1 : 1;
-    localStorage.setItem('pageRefreshCount', count);
-    
-    const countSpan = document.querySelector('#refresh-counter span');
-    if (countSpan) {
-        countSpan.textContent = count;
+// Global Server-Side Refresh Count Logic
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const response = await fetch('/api/refresh', { method: 'POST' });
+        const data = await response.json();
+        
+        const countSpan = document.querySelector('#refresh-counter span');
+        if (countSpan && data.count) {
+            countSpan.textContent = data.count;
+        }
+    } catch (error) {
+        console.error('Error fetching global refresh count:', error);
     }
 });
